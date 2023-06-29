@@ -6,34 +6,52 @@
 \usage{
 CICA(
   DataList,
-  nStarts,
   nComp,
   nClus,
-  scale = TRUE,
+  RanStarts,
+  RatStarts = NULL,
+  pseudo = NULL,
+  pseudoFac,
+  userDef = NULL,
+  userGrid = NULL,
+  scalevalue = 1000,
   center = TRUE,
-  rational = NULL,
   maxiter = 100,
-  verbose = TRUE
+  verbose = TRUE,
+  ctol = 1e-06,
+  checks = TRUE
 )
 }
 \arguments{
 \item{DataList}{a list of matrices}
 
-\item{nStarts}{number of multiple starts}
+\item{nComp}{number or vector of ICA components per cluster}
 
-\item{nComp}{number of ICA components per cluster}
+\item{nClus}{number or vector of clusters}
 
-\item{nClus}{number of clusters}
+\item{RanStarts}{number of random starts}
 
-\item{scale}{scale each matrix to have an equal sum of squares}
+\item{RatStarts}{Generate rational starts. Eiter 'all' or a specific linkage method name (e.g., 'complete'). Use NULL to indicate that Rational starts should not be used.}
+
+\item{pseudo}{percentage value for perturbating rational starts to obtain pseudo rational starts}
+
+\item{pseudoFac}{factor to multiply the number of rational starts (7 in total) to obtain pseudorational starts}
+
+\item{userDef}{a user-defined starting seed stored in a data.frame, if NULL no userDef starting partition is used}
+
+\item{userGrid}{user supplied data.frame for multiple model CICA. First column are the requested components. Second column are the requested clusters}
+
+\item{scalevalue}{desired sum of squares of the block scaling procedure}
 
 \item{center}{mean center matrices}
-
-\item{rational}{a rational starting seed, if NULL no rational starting seed is used}
 
 \item{maxiter}{maximum number of iterations for each start}
 
 \item{verbose}{print loss information to console}
+
+\item{ctol}{tolerance value for convergence criterion}
+
+\item{checks}{boolean parameter that indicates whether the input checks should be run (TRUE) or not (FALSE).}
 }
 \value{
 \code{CICA} returns an object of \code{\link{class}} "CICA". It contains the estimated clustering, cluster specific component matrices and subject specific time course matrices
@@ -41,15 +59,30 @@ CICA(
 \item{Sr}{list of size \code{nClus}, containing cluster specific independent components}
 \item{Ais}{list of size \code{length(DataList)}, containing subject specific time courses}
 \item{Loss}{loss function value of the best start}
+\item{FinalLossDiff}{value of the loss difference between the last two iterations of the algorithm.}
+\item{IndLoss}{a vector with containing the individual loss function values}
 \item{LossStarts}{loss function values of all starts}
+\item{Iterations}{Number of iterations}
+\item{starts}{dataframe with the used starting partitions}
 }
 \description{
 Main function to perform Clusterwise Independent Component Analysis
 }
 \examples{
-data('ExampleData', package = 'CICA')
-output <- CICA(DataList = ExampleData, nStarts = 3, nComp = 5, nClus = 3, verbose = FALSE)
-summary(output)
+\dontrun{
+CICA_data <- Sim_CICA(Nr = 15, Q = 5, R = 4, voxels = 100, timepoints = 10,
+E = 0.4, overlap = .25, externalscore = TRUE)
+
+multiple_output = CICA(DataList = CICA_data$X, nComp = 2:6, nClus = 1:5,
+userGrid = NULL, RanStarts = 30, RatStarts = NULL, pseudo = c(0.1, 0.2),
+pseudoFac = 2, userDef = NULL, scalevalue = 1000, center = TRUE,
+maxiter = 100, verbose = TRUE, ctol = .000001)
+
+summary(multiple_output$Q_5_R_4)
+
+plot(multiple_output$Q_5_R_4)
+}
+
 }
 \author{
 Jeffrey Durieux

@@ -6,7 +6,11 @@
 #'
 #' @keywords internal
 #' @return a numeric vector indicating the new partitioning vector without empty clusters
-SearchEmptyClusters <- function(nClus, newcluster, SSminVec) {
+SearchEmptyClusters <- function(nClus, newcluster, SSminVec = NULL) {
+
+  if(is.null(SSminVec)){
+    SSminVec <- rep(100, length(newcluster))
+  }
 
   OriCluster <- 1:nClus
 
@@ -51,5 +55,26 @@ SearchEmptyClusters <- function(nClus, newcluster, SSminVec) {
   if( length(unique(newcluster)) != nClus ){
     stop('In function SearchEmptyCluster, empty/ies occurred')
   }
+
+
+  # check min number of clusters
+  # if(!is.null(minclus)){
+  #   test2 <- table(newcluster) < minclus
+  #
+  #   if ( all( test2 == TRUE) ){
+  #     newcluster <- newcluster
+  #   }else{
+  #     SparseClusters <- which(test2 == TRUE)
+  #
+  #     worst <- sort( SSminVec, decreasing = TRUE)
+  #
+  #     Index <- sapply( seq_along(1:minclus),
+  #                      function(i) FUN = which( SSminVec == worst[i] ) )
+  #     newcluster[Index] <- SparseClusters
+  #   }
+  # }
+
+
+
   return(newcluster)
 }
