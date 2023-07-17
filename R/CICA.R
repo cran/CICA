@@ -62,7 +62,13 @@
 CICA <- function(DataList, nComp, nClus, RanStarts, RatStarts=NULL, pseudo=NULL, pseudoFac, userDef = NULL,  userGrid = NULL, scalevalue = 1000, center = TRUE, maxiter = 100, verbose = TRUE, ctol = .000001, checks = TRUE){
 
   #### input arguments check ####
-
+  
+  if(is.null(names(DataList))){
+    filenames <- 1:length(DataList)
+  }else{
+    filenames <- names(DataList)
+  }
+  
   # Feasible randomstart number check (limit is 10% of Stirling number of the 2nd kind)
   if(checks==TRUE){
 
@@ -103,11 +109,6 @@ CICA <- function(DataList, nComp, nClus, RanStarts, RatStarts=NULL, pseudo=NULL,
   }
 
 
-  if(is.null(names(DataList))){
-    filenames <- 1:length(DataList)
-  }else{
-    filenames <- names(DataList)
-  }
 
   if(is.null(userGrid)){
     if(hasArg(nComp) == FALSE){
@@ -124,7 +125,7 @@ CICA <- function(DataList, nComp, nClus, RanStarts, RatStarts=NULL, pseudo=NULL,
 
   if(!is.null(pseudo)){
 
-    if(pseudo==0){#Pseudo==0 does not make sense. Transform it to 0
+    if(any(pseudo==0)){#Pseudo==0 does not make sense. Transform it to 0
       pseudo<-NULL
       warning("0 is not a possible value for pseudo. Pseudo-rational starts are not computed.")
     }
