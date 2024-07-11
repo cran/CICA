@@ -8,6 +8,7 @@ CICA(
   DataList,
   nComp,
   nClus,
+  method = "fastICA",
   RanStarts,
   RatStarts = NULL,
   pseudo = NULL,
@@ -29,9 +30,11 @@ CICA(
 
 \item{nClus}{number or vector of clusters}
 
+\item{method}{Component method, default is \code{fastICA}. \code{EVD} for a fast eigen value based estimation}
+
 \item{RanStarts}{number of random starts}
 
-\item{RatStarts}{Generate rational starts. Eiter 'all' or a specific linkage method name (e.g., 'complete'). Use NULL to indicate that Rational starts should not be used.}
+\item{RatStarts}{Generate rational starts. Either 'all' or a specific linkage method name (e.g., 'complete'). Use NULL to indicate that Rational starts should not be used.}
 
 \item{pseudo}{percentage value for perturbating rational starts to obtain pseudo rational starts}
 
@@ -74,9 +77,9 @@ CICA_data <- Sim_CICA(Nr = 15, Q = 5, R = 4, voxels = 100, timepoints = 10,
 E = 0.4, overlap = .25, externalscore = TRUE)
 
 multiple_output = CICA(DataList = CICA_data$X, nComp = 2:6, nClus = 1:5,
-userGrid = NULL, RanStarts = 30, RatStarts = NULL, pseudo = c(0.1, 0.2),
-pseudoFac = 2, userDef = NULL, scalevalue = 1000, center = TRUE,
-maxiter = 100, verbose = TRUE, ctol = .000001)
+method = 'fastICA',userGrid = NULL, RanStarts = 30, RatStarts = NULL, 
+pseudo = c(0.1, 0.2),pseudoFac = 2, userDef = NULL, scalevalue = 1000, 
+center = TRUE,maxiter = 100, verbose = TRUE, ctol = .000001)
 
 summary(multiple_output$Q_5_R_4)
 

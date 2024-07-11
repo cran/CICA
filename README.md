@@ -1,6 +1,6 @@
 # Clusterwise Independent Component Analysis R package
 
-[![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/licenses/) ![GitHub R package version](https://img.shields.io/github/r-package/v/jeffreydurieux/CICA) ![CRAN/METACRAN](https://img.shields.io/cran/v/CICA) [![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/grand-total/CICA?color=blue)](https://r-pkg.org/pkg/CICA) ![GitHub contributors](https://img.shields.io/github/contributors/jeffreydurieux/CICA)
+[![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/license) ![GitHub R package version](https://img.shields.io/github/r-package/v/jeffreydurieux/CICA) ![CRAN/METACRAN](https://img.shields.io/cran/v/CICA) [![CRAN RStudio mirror downloads](https://cranlogs.r-pkg.org/badges/grand-total/CICA?color=blue)](https://r-pkg.org/pkg/CICA) ![GitHub contributors](https://img.shields.io/github/contributors/jeffreydurieux/CICA)
 
 ## Version notes
 
@@ -26,3 +26,5 @@ This version contains:
 -   R v0.3.0 CICA version with multiple CICA models
 
 -   R v1.0.0 CICA version with all working functionalities. This version is also available on CRAN. This package version includes the papayar archived files that were made by John Muschelli.
+
+-   R v1.1.0 CICA version with a fast EVD based estimation procedure. This results in an equal (or similar) clustering. Use the final clustering to seed the CICA (using method = 'fastICA') to extract independent components. 
